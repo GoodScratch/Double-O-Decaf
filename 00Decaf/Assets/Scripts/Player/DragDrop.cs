@@ -48,22 +48,24 @@ public class DragDrop : MonoBehaviour
     }
     private IEnumerator DragUpdate(GameObject clickedObject)
     {
-        float initialDistance = Vector3.Distance(clickedObject.transform.position, mainCamera.transform.position);
-        clickedObject.TryGetComponent<Rigidbody>(out var rb);
         clickedObject.TryGetComponent<IDrag>(out var iDragComponent);
+        Vector3 startDistance = (Vector3)(iDragComponent?.GetStartPoint());
+        float startZ = startDistance.z;
+        float initialDistance = Vector3.Distance(startDistance, mainCamera.transform.position);
+        clickedObject.TryGetComponent<Rigidbody>(out var rb);
         iDragComponent?.OnStartDrag();
         while (mouseClick.ReadValue<float>() != 0) {
 
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (rb != null)
             {
-                Vector3 direction = ray.GetPoint(initialDistance) - clickedObject.transform.position;
+                Vector3 direction = ray.GetPoint(initialDistance) - new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y,startZ);
                 rb.linearVelocity = direction * mouseDragPhysicsSpeed;
                 yield return waitForFixedUpdate;
             }
             else
             {
-                clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position, ray.GetPoint(initialDistance), ref velocity, mouseDragSpeed);
+                clickedObject.transform.position = Vector3.SmoothDamp(new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, startZ), ray.GetPoint(initialDistance), ref velocity, mouseDragSpeed);
                 yield return null;
             }
 

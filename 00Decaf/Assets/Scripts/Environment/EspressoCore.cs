@@ -3,6 +3,8 @@ using UnityEngine;
 public class EspressoCore : MonoBehaviour, ICupInteract
 {
     [SerializeField] private Transform cupSpot;
+    [SerializeField] private LayerMask cupLayer;
+    [SerializeField] private int coffee = 1;
   public Transform GetTransform()
     {
         return cupSpot;
@@ -10,6 +12,15 @@ public class EspressoCore : MonoBehaviour, ICupInteract
 
     public void Interact()
     {
-        Debug.Log("cup is filled!");
+        float radius = 1f;
+        Collider[] colliderArray = Physics.OverlapSphere(transform.position, radius, cupLayer);
+        foreach (Collider collider in colliderArray)
+        {
+            collider.TryGetComponent<IAddToCup>(out IAddToCup addCup);
+            addCup.AddCoffee(coffee);
+
+        }
+
+
     }
 }

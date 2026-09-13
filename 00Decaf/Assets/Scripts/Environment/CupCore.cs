@@ -46,7 +46,7 @@ public class CupCore : MonoBehaviour, IDrag, IAddToCup
         if (hit.collider != null)
         {
             hit.collider.TryGetComponent(out ICupInteract cupInteractable);
-                Debug.Log("spherecast!");
+                
                 cupInteractable.Interact();
                 transform.position = cupInteractable.GetTransform().position;
             }
@@ -65,6 +65,7 @@ public class CupCore : MonoBehaviour, IDrag, IAddToCup
     public void AddCoffee(int addCoffee)
     {
         coffee += addCoffee;
+        Debug.Log("interact!");
         UpdateLook();
     }
 

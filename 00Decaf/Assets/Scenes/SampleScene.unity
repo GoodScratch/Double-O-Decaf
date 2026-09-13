@@ -973,6 +973,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EspressoCore
   cupSpot: {fileID: 131903611}
+  cupLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  coffee: 1
 --- !u!65 &553394410
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1991,7 +1995,7 @@ GameObject:
   - component: {fileID: 1581668499}
   - component: {fileID: 1581668498}
   - component: {fileID: 1581668502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
